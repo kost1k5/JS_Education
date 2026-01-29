@@ -3,7 +3,7 @@ const url = require('url');
 
 function gcd(a, b) {
     
-    while (b) {
+    while (b > 0n) {
         a %= b;
         [a, b] = [b, a];
     }
@@ -11,14 +11,27 @@ function gcd(a, b) {
 }
 
 function lcm(x, y) {
-const numX = Number(x);
-const numY = Number(y);
+    try {
+        // 1. Пытаемся превратить входные данные в BigInt
+        const bigX = BigInt(x);
+        const bigY = BigInt(y);
 
-if (isNaN(numX) || isNaN(numY) || numX <= 0 || numY <= 0 || !Number.isInteger(numX) || !Number.isInteger(numY))
-     {
-    return "NaN";
-}
-    return (numX * numY) / gcd(numX, numY);
+        // 2. Проверка на натуральность (должны быть > 0)
+        if (bigX <= 0n || bigY <= 0n) {
+            return "NaN";
+        }
+
+        // 3. Считаем НОК через BigInt
+        // Формула та же, но используем BigInt-логику
+        const result = (bigX * bigY) / gcd(bigX, bigY);
+        
+        // Возвращаем как строку, BigInt автоматически уберет "e+" и даст только цифры
+        return result.toString();
+        
+    } catch (e) {
+        // Если пришла дробь (1.5) или буквы, BigInt() выдаст ошибку, ловим её и возвращаем NaN
+        return "NaN";
+    }
 }
 
 const server = http.createServer((req, res) => {
@@ -45,7 +58,7 @@ const server = http.createServer((req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 80;
 server.listen(PORT, () => {
     console.log(`Сервер запущен на порту ${PORT}`);
 });
