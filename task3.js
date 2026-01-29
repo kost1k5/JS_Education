@@ -45,7 +45,8 @@ const server = http.createServer((req, res) => {
     }
 });
 
-server.listen(3000, () => {
-    console.log('Сервер запущен на http://localhost:3000' + '/kostyatv1790_gmail_com');
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Сервер запущен на порту ${PORT}`);
 });
 
