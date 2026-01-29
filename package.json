@@ -1,5 +1,14 @@
 {
-  "dependencies": {
-    "adm-zip": "^0.5.16"
-  }
+  "name": "task3",
+  "version": "1.0.0",
+  "description": "Task 3 solution",
+  "main": "task3.js",
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "start": "node task3.js"
+  },
+  "author": "",
+  "license": "ISC"
 }
